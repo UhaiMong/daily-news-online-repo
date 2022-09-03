@@ -99,7 +99,7 @@ const proccessDataLoad = () => {
     // load star...
     loadingToggle(true);
     const loadSpiner = document.getElementById('loadComplete');
-    loadNewsCategory(loadSpiner);
+    loadNewsCategory();
 
 }
 
