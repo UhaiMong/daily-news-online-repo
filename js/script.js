@@ -9,11 +9,9 @@ const loadNewsCategory = async () => {
         console.log(Error);
     }
 }
-
-loadNewsCategory('01');
+loadNewsCategory();
 
 const displayCategory = (categories) => {
-    console.log(categories);
     const navBarContainer = document.getElementById('menubar');
 
     categories.forEach(category => {
@@ -60,6 +58,7 @@ const displayNewsDetails = categories => {
     const newsContainer = document.getElementById('news-container');
     newsContainer.innerHTML = ``;
     categories.forEach(category => {
+        console.log(category);
         const newDiv = document.createElement('div');
         newDiv.classList.add('row');
         newDiv.innerHTML = `
@@ -100,8 +99,7 @@ const proccessDataLoad = () => {
     // load star...
     loadingToggle(true);
     const loadSpiner = document.getElementById('loadComplete');
-    console.log(loadSpiner);
-    newsDetails(loadSpiner);
+    loadNewsCategory(loadSpiner);
 
 }
 
@@ -125,7 +123,6 @@ const readMoreDetails = async news_id => {
 
 const showMoreDetailsNews = (newsMore) => {
     newsMore.forEach(news => {
-        console.log(news);
         const modalTitle = document.getElementById('modal-title');
         modalTitle.innerText = `${news.title}`;
 
