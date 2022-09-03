@@ -19,7 +19,7 @@ const displayCategory = (categories) => {
         const newAnchor = document.createElement('a');
         newAnchor.classList.add('nav-link');
         newAnchor.innerHTML = `
-            <a onclick="newsDetails('${category.category_id ? category.category_id :"The content is not available"}')" class="nav-link fs-6">${category.category_name}</a>
+            <a id="loadComplete" onclick="newsDetails('${category.category_id ? category.category_id :"The content is not available"}')" class="nav-link fs-6">${category.category_name}</a>
         `;
         navBarContainer.appendChild(newAnchor);
 
@@ -45,7 +45,8 @@ const displayNewsDetails = categories => {
     // const wordCount = category.details.trim().split(/\s+/).length;
     // console.log(wordCount);
     categories.forEach(category => {
-        console.log(category);
+        const objLength = Object.values(category);
+        console.log(objLength);
         const newDiv = document.createElement('div');
         newDiv.classList.add('row');
         newDiv.innerHTML = `
@@ -56,18 +57,18 @@ const displayNewsDetails = categories => {
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">${category.title}</h5>
-                            <p readMoreDetails() class="card-text" data-bs-toggle="modal" data-bs-target="#exampleModal">${category.details.slice(0,350)}....</p>
+                            <p readMoreDetails() class="card-text" data-bs-toggle="modal" data-bs-target="#exampleModal">${category.details.slice(0, 350)}....</p>
                             
                             <div class="row">
                                 <div class="d-flex align-items-center justify-content-evenly col">
-                                    <img class="img-fluid w-25 rounded rounded-circle" src="${category.author.img?category.author.img:alt="Empty"}">
+                                    <img class="img-fluid w-25 rounded rounded-circle" src="${category.author.img ? category.author.img : alt = "Empty"}">
 
                                     <span>
-                                        <h6>${category.author.name?category.author.name:"Unknow"}</h6>
-                                        <p class="card-text"><smal class="text-muted">${category.author.published_date?category.author.published_date:"not sure"}</small></p>
+                                        <h6>${category.author.name ? category.author.name : "Unknow"}</h6>
+                                        <p class="card-text"><smal class="text-muted">${category.author.published_date ? category.author.published_date : "not sure"}</small></p>
                                     </span>
                                 </div>
-                                <h6 class="col">Viewed: ${category.total_view?category.total_view:"0"}</h6>
+                                <h6 class="col">Viewed: ${category.total_view ? category.total_view : "0"}</h6>
 
                                 <a class="btn col">Details</a>
                             </div>
@@ -76,7 +77,29 @@ const displayNewsDetails = categories => {
                 </div>
         `;
         newsContainer.appendChild(newDiv);
-    })
+    });
+
+    // stop loader...
+    loadingToggle(false);
+}
+
+const proccessDataLoad = () => {
+    // load star...
+    loadingToggle(true);
+    const loadSpiner = document.getElementById('loadComplete');
+    console.log(loadSpiner);
+    newsDetails(loadSpiner);
+
+}
+
+const loadingToggle = isLoading => {
+    const getSpinerId = document.getElementById('spiner');
+    if (isLoading) {
+        getSpinerId.classList.remove('d-none');
+    }
+    else {
+        getSpinerId.classList.add('d-none');
+    }
 }
 
 const readMoreDetails = async news_id => {
