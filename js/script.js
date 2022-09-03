@@ -28,7 +28,7 @@ const displayCategory = (categories) => {
 
 const newsDetails = async id => {
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
-    console.log(url);
+    // console.log(url);
     try {
         const res = await fetch(url);
         const data = await res.json();
@@ -40,13 +40,19 @@ const newsDetails = async id => {
 }
 
 const displayNewsDetails = categories => {
+    const propOwn = categories.length;
+    const totalNewsItems = document.getElementById('total-items');
+    totalNewsItems.innerHTML = `
+        <h5>${propOwn} items found in this category.</h5>
+    `;
     const newsContainer = document.getElementById('news-container');
     newsContainer.innerHTML = ``;
     // const wordCount = category.details.trim().split(/\s+/).length;
     // console.log(wordCount);
     categories.forEach(category => {
-        const objLength = Object.values(category);
-        console.log(objLength);
+        // console.log(category)
+        const propOwn = Object.getOwnPropertySymbols(category);
+        // console.log(propOwn.length);
         const newDiv = document.createElement('div');
         newDiv.classList.add('row');
         newDiv.innerHTML = `
