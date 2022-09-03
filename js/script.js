@@ -10,6 +10,8 @@ const loadNewsCategory = async () => {
     }
 }
 
+loadNewsCategory('01');
+
 const displayCategory = (categories) => {
     console.log(categories);
     const navBarContainer = document.getElementById('menubar');
@@ -19,11 +21,12 @@ const displayCategory = (categories) => {
         const newAnchor = document.createElement('a');
         newAnchor.classList.add('nav-link');
         newAnchor.innerHTML = `
-            <a id="loadComplete" onclick="newsDetails('${category.category_id ? category.category_id :"The content is not available"}')" class="nav-link fs-6">${category.category_name}</a>
+            <a id="loadComplete" onclick="newsDetails('${category.category_id ? category.category_id : "The content is not available"}')" class="nav-link fs-6">${category.category_name}</a>
         `;
         navBarContainer.appendChild(newAnchor);
 
-    })
+
+    });
 }
 
 const newsDetails = async id => {
@@ -40,19 +43,23 @@ const newsDetails = async id => {
 }
 
 const displayNewsDetails = categories => {
-    const propOwn = categories.length;
+
     const totalNewsItems = document.getElementById('total-items');
-    totalNewsItems.innerHTML = `
-        <h5>${propOwn} items found in this category.</h5>
-    `;
+    const itemFound = categories.length;
+    if (itemFound==0) {
+        totalNewsItems.innerHTML = `
+            <h5>Sorry!! no content available.</h5>
+        `;
+    }
+    else {
+        
+        totalNewsItems.innerHTML = `
+            <h5>${itemFound} items found in this category.</h5>
+        `;
+    }
     const newsContainer = document.getElementById('news-container');
     newsContainer.innerHTML = ``;
-    // const wordCount = category.details.trim().split(/\s+/).length;
-    // console.log(wordCount);
     categories.forEach(category => {
-        // console.log(category)
-        const propOwn = Object.getOwnPropertySymbols(category);
-        // console.log(propOwn.length);
         const newDiv = document.createElement('div');
         newDiv.classList.add('row');
         newDiv.innerHTML = `
@@ -140,5 +147,3 @@ const showMoreDetailsNews = (newsMore) => {
         `;
     })
 }
-
-loadNewsCategory('');
